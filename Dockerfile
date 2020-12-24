@@ -1,4 +1,4 @@
-FROM nginx:alpine 
+FROM nginx:1.18.0 
 MAINTAINER mailaakankshi@gmail.com 
 
 COPY heinekenproject.crt /etc/ssl/certs
