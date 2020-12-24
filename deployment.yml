@@ -1,0 +1,19 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: firefox-deployment
+  namespace: development
+  labels:
+    app: firefox-app
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        apps: firefox-app
+    spec:
+      containers:
+      - name: firefox-app
+        image: heinekenproject
+        ports:
+        - containerPort: 8081
