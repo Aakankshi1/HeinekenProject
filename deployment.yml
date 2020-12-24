@@ -16,4 +16,4 @@ spec:
       - name: firefox-app
         image: heinekenproject
         ports:
-        - containerPort: 8081
+        - containerPort: 8083

@@ -5,8 +5,9 @@ metadata:
   namespace: development
 spec:
   ports:
-    - name: http
-      port: 8081
+    - name: TCP
+      port: 80
+      targetPort: 8083
   type: LoadBalancer    
   selector:
     apps: firefox-app
