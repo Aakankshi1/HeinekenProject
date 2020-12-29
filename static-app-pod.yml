@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: staticApp
+  name: static-app
   labels:
-    app: staticApp
+    app: static-app
 spec:
   containers:
-    - name: staticApp
-      image: aakankshi/hnproject:latest
+    - name: static-app
+      image: aakankshi/hnproject:v1
       ports:
         - containerPort: 9091
