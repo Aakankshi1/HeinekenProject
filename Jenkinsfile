@@ -34,8 +34,6 @@ pipeline {
         //         }
         //     }
         // }
-    }
-    stages {
         stage('k8_deploy') {
             steps {
                 sshagent(['ubuntu_aws_key']) {
