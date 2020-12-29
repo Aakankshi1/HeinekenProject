@@ -9,4 +9,4 @@ spec:
     - name: firefox-app
       image: aakankshi/hnproject:latest
       ports:
-        - containerPort: 8083
+        - containerPort: 9091

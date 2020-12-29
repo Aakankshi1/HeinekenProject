@@ -21,23 +21,40 @@ pipeline {
                 }
             }
         }
-        stage('Docker Deploy Dev'){
+        stage('Docker Deploy Dev'){ 
             steps{
-                sshagent(['aws_docker']) {
+                sshagent(['ubuntu_aws_key']) {
                     withCredentials([string(credentialsId: 'Docker-hub', variable: 'dockerhubPwd')]) {
-                        sh "ssh -vvv -o StrictHostKeyChecking=no dockeradmin@3.21.127.6 docker login -u aakankshi -p ${dockerhubPwd} ${DOCKERHUB_URL}"
+                        sh "ssh -vvv -o StrictHostKeyChecking=no ubuntu@3.21.127.6 docker login -u aakankshi -p ${dockerhubPwd} ${DOCKERHUB_URL}"
                     }
                     // Remove existing container, if container name does not exists still proceed with the build
-                    sh script: "ssh -vvv -o StrictHostKeyChecking=no dockeradmin@3.21.127.6 docker rm -f staticapp",  returnStatus: true
+                    sh script: "ssh -vvv -o StrictHostKeyChecking=no ubuntu@3.21.127.6 docker rm -f staticapp",  returnStatus: true
                     
-                    sh "ssh -vvv -o StrictHostKeyChecking=no dockeradmin@3.21.127.6 docker run -p 9090:80 -p 9091:443 -d --name staticapp ${IMAGE_TAG}"
+                    sh "ssh -vvv -o StrictHostKeyChecking=no ubuntu@3.21.127.6 docker run -p 9090:80 -p 9091:443 -d --name staticapp ${IMAGE_TAG}"
                 }
             }
         }
     }
+    // stages {
+    //     stage('k8_deploy') {
+    //         steps {
+    //             sshagent(['ubuntu_aws']) {
+    //                 sh "scp -vvv -o StrictHostKeyChecking=no services.yml static-app-pod.yml ubuntu@3.21.127.6:/home/ubuntu/"
+    //                 script{
+    //                     try{
+    //                         sh "ssh ubuntu@3.21.127.6 kubectl apply -f ."
+    //                     }
+    //                     catch(error){
+    //                         sh "ssh ubuntu@3.21.127.6 kubectl create -f ."
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 }
 
 def getDockerTag(){
-    def tag  = sh script: 'date +%F', returnStdout: true
+    def tag  = sh script: 'git rev-parse HEAD', returnStdout: true
     return tag
 }

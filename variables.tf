@@ -1,3 +1,8 @@
+variable "name" {
+  description = "Name to use for the instance"
+  type        = string
+}
+
 variable "instance_count" {
   description = "Number of instances to launch"
   type        = number

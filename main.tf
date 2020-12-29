@@ -14,7 +14,7 @@ resource "aws_instance" "staticService" {
   vpc_security_group_ids  = var.vpc_sg_id
   
   tags = {
-      Name =  "Nexus"
+      Name =  var.name
     }
 
 }
