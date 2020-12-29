@@ -21,37 +21,37 @@ pipeline {
                 }
             }
         }
-        stage('Docker Deploy Dev'){ 
-            steps{
-                sshagent(['ubuntu_aws_key']) {
-                    withCredentials([string(credentialsId: 'Docker-hub', variable: 'dockerhubPwd')]) {
-                        sh "ssh -vvv -o StrictHostKeyChecking=no ubuntu@3.21.127.6 docker login -u aakankshi -p ${dockerhubPwd} ${DOCKERHUB_URL}"
-                    }
-                    // Remove existing container, if container name does not exists still proceed with the build
-                    sh script: "ssh -vvv -o StrictHostKeyChecking=no ubuntu@3.21.127.6 docker rm -f staticapp",  returnStatus: true
+        // stage('Docker Deploy Dev'){ 
+        //     steps{
+        //         sshagent(['ubuntu_aws_key']) {
+        //             withCredentials([string(credentialsId: 'Docker-hub', variable: 'dockerhubPwd')]) {
+        //                 sh "ssh -vvv -o StrictHostKeyChecking=no ubuntu@3.21.127.6 docker login -u aakankshi -p ${dockerhubPwd} ${DOCKERHUB_URL}"
+        //             }
+        //             // Remove existing container, if container name does not exists still proceed with the build
+        //             sh script: "ssh -vvv -o StrictHostKeyChecking=no ubuntu@3.21.127.6 docker rm -f staticapp",  returnStatus: true
                     
-                    sh "ssh -vvv -o StrictHostKeyChecking=no ubuntu@3.21.127.6 docker run -p 9090:80 -p 9091:443 -d --name staticapp ${IMAGE_TAG}"
+        //             sh "ssh -vvv -o StrictHostKeyChecking=no ubuntu@3.21.127.6 docker run -p 9090:80 -p 9091:443 -d --name staticapp ${IMAGE_TAG}"
+        //         }
+        //     }
+        // }
+    }
+    stages {
+        stage('k8_deploy') {
+            steps {
+                sshagent(['ubuntu_aws_key']) {
+                    sh "scp -vvv -o StrictHostKeyChecking=no services.yml static-app-pod.yml ubuntu@18.217.248.102:/home/ubuntu/"
+                    script{
+                        try{
+                            sh "ssh ubuntu@18.217.248.102 kubectl apply -f ."
+                        }
+                        catch(error){
+                            sh "ssh ubuntu@18.217.248.102 kubectl create -f ."
+                        }
+                    }
                 }
             }
         }
     }
-    // stages {
-    //     stage('k8_deploy') {
-    //         steps {
-    //             sshagent(['ubuntu_aws_key']) {
-    //                 sh "scp -vvv -o StrictHostKeyChecking=no services.yml static-app-pod.yml ubuntu@18.217.25.30:/home/ubuntu/"
-    //                 script{
-    //                     try{
-    //                         sh "ssh ubuntu@3.21.127.6 kubectl apply -f ."
-    //                     }
-    //                     catch(error){
-    //                         sh "ssh ubuntu@3.21.127.6 kubectl create -f ."
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
 }
 
 def getDockerTag(){
