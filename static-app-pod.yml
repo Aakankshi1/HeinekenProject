@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: firefox-app
+  name: staticApp
   labels:
-    app: firefox-app
+    app: staticApp
 spec:
   containers:
-    - name: firefox-app
+    - name: staticApp
       image: aakankshi/hnproject:latest
       ports:
         - containerPort: 9091
