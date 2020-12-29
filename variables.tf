@@ -15,6 +15,12 @@ variable "ami" {
   default     = "ami-0dd9f0e7df0f0a138"
 }
 
+variable "keyname" {
+  description = "key Pair Name to use for the instance"
+  type        = string
+  default     = "k8_mac"
+}
+
 variable "instance_initiated_shutdown_behavior" {
   description = "Shutdown behavior for the instance" # https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html#Using_ChangingInstanceInitiatedShutdownBehavior
   type        = string

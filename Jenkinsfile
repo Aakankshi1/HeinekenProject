@@ -38,8 +38,8 @@ pipeline {
     // stages {
     //     stage('k8_deploy') {
     //         steps {
-    //             sshagent(['ubuntu_aws']) {
-    //                 sh "scp -vvv -o StrictHostKeyChecking=no services.yml static-app-pod.yml ubuntu@3.21.127.6:/home/ubuntu/"
+    //             sshagent(['ubuntu_aws_key']) {
+    //                 sh "scp -vvv -o StrictHostKeyChecking=no services.yml static-app-pod.yml ubuntu@18.217.25.30:/home/ubuntu/"
     //                 script{
     //                     try{
     //                         sh "ssh ubuntu@3.21.127.6 kubectl apply -f ."
