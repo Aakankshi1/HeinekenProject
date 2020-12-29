@@ -1,0 +1,19 @@
+
+timestamps {
+node () {
+
+    stage ('heineken_Project - Checkout') {
+      checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '606cb19a-4dce-40fa-b888-43f089a6eb22', url: 'https://github.com/Aakankshi1/HeinekenProject.git']]]) 
+    }
+
+    stage ('heineken_Project - Build') {
+      withDockerRegistry(credentialsId: 'aakankshi', url: 'https://index.docker.io/v1/') {
+      }
+    }
+
+    stage ('heineken_Project - Publish') {
+      sshPublisher(publishers: [sshPublisherDesc(configName: 'aws_docker', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'docker run -p 9090:80 -p 9091:443  -d aakankshi/hnproject:v1', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+    }
+}
+}
+
