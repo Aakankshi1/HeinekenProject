@@ -1,9 +1,9 @@
-locals {
-  user_data = <<EOF
+#locals {
+#  user_data = <<EOF
 #!/bin/bash
-echo "Hello Terraform!"
-EOF
-}
+#echo "Hello Terraform!"
+#EOF
+#}
 
 resource "aws_instance" "staticService" {
 #  count = var.instance_count
@@ -13,6 +13,7 @@ resource "aws_instance" "staticService" {
   subnet_id        = var.subnet_id
   vpc_security_group_ids  = var.vpc_sg_id
   key_name         = var.keyname
+  #user_data        = file(var.install_tool)
   
   tags = {
       Name =  var.name

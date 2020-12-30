@@ -45,4 +45,9 @@ variable "subnet_id" {
   default     = "subnet-d665f59a"
 }
 
+variable "install_tool" {
+  description = "The VPC Subnet ID to launch in"
+  type        = string
+}
+
 

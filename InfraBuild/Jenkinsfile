@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+    options { timestamps () }
+    environment{
+    }
+    tools {
+        terraform 'aws_ec2_tf'
+    }
+    parameters {
+        string defaultValue: '', description: 'Name to use for the instance', name: 'EC2_NAME', trim: false
+    }
+    stages{
+        stage('Checkout') {
+            steps {
+                git credentialsId: 'ubuntu_aws_key', url: 'https://github.com/Aakankshi1/HeinekenProject.git'
+                // sh 'mkdir -p creds'
+                // sh 'echo $SVC_ACCOUNT_KEY | base64 -d > ./creds/serviceaccount.json'
+            }
+        }
+        stage('Terraform Init and Validate'){
+            steps{
+                echo "***************Terraform initialization*************"    
+                    sh 'terraform init'
+                    sh 'terraform validate'
+                }
+        }
+        stage('Terraform Plan'){
+                 steps{
+                    echo "************Terraform Plan*****************"
+                        sh 'terraform plan'
+                        sh 'terraform plan -out myplan'
+                    }
+        }
+        stage('Terraform Apply'){
+            steps{
+                echo "***********Terraform Apply****************"
+                input "Deploy Infra to AWS ?"
+                sh 'terraform apply --auto-approve -var=params.EC2_NAME'
+            }
+        }
+    }
+}

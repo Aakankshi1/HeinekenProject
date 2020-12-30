@@ -9,4 +9,4 @@ spec:
     - name: static-app
       image: aakankshi/hnproject:v1
       ports:
-        - containerPort: 9091
+        - containerPort: 80
