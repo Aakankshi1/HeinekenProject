@@ -1,8 +1,6 @@
 pipeline {
     agent any
     options { timestamps () }
-    environment{
-    }
     tools {
         terraform 'aws_ec2_tf'
     }
