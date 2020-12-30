@@ -31,10 +31,9 @@ pipeline {
         stage('Terraform Apply'){
             steps{
                 echo "***********Terraform Apply****************"
-                print "${params.EC2_NAME}"
-                sh "echo sh isBar is ${params.EC2_NAME}"
-                // input "Deploy Infra to AWS ?"
-                // sh 'terraform apply --auto-approve -var="name=${params.EC2_NAME}" InfraBuild/'
+                print "Name of EC2 instance : ${params.EC2_NAME}"
+                input "Deploy Infra to AWS ?"
+                sh 'terraform apply --auto-approve -var="name=${params.EC2_NAME}" InfraBuild/'
             }
         }
     }
