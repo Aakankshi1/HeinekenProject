@@ -18,22 +18,22 @@ pipeline {
         stage('Terraform Init and Validate'){
             steps{
                 echo "***************Terraform initialization*************"    
-                    sh 'terraform init'
-                    sh 'terraform validate'
+                    sh 'terraform init InfraBuild/'
+                    sh 'terraform validate InfraBuild/'
                 }
         }
         stage('Terraform Plan'){
                  steps{
                     echo "************Terraform Plan*****************"
-                        sh 'terraform plan'
-                        sh 'terraform plan -out myplan'
+                        sh 'terraform plan InfraBuild/'
+                        sh 'terraform plan InfraBuild/ -out myplan'
                     }
         }
         stage('Terraform Apply'){
             steps{
                 echo "***********Terraform Apply****************"
                 input "Deploy Infra to AWS ?"
-                sh 'terraform apply --auto-approve -var=params.EC2_NAME'
+                sh 'terraform apply InfraBuild/ --auto-approve -var=params.EC2_NAME'
             }
         }
     }
