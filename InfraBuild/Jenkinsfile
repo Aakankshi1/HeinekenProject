@@ -26,7 +26,6 @@ pipeline {
                  steps{
                     echo "************Terraform Plan*****************"
                         sh 'terraform plan -var=params.EC2_NAME InfraBuild/'
-#                        sh 'terraform plan -var=params.EC2_NAME InfraBuild/ -out myplan'
                     }
         }
         stage('Terraform Apply'){
