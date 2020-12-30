@@ -33,7 +33,7 @@ pipeline {
                 echo "***********Terraform Apply****************"
                 print "Name of EC2 instance : ${params.EC2_NAME}"
                 input "Deploy Infra to AWS ?"
-                sh 'terraform apply --auto-approve -var="name=a" InfraBuild/'
+                sh "terraform apply --auto-approve -var='name=${params.EC2_NAME}' InfraBuild/"
             }
         }
     }
