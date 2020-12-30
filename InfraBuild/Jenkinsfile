@@ -15,19 +15,19 @@ pipeline {
                 // sh 'echo $SVC_ACCOUNT_KEY | base64 -d > ./creds/serviceaccount.json'
             }
         }
-        // stage('Terraform Init and Validate'){
-        //     steps{
-        //         echo "***************Terraform initialization*************"    
-        //             sh 'terraform init InfraBuild/'
-        //             sh 'terraform validate InfraBuild/'
-        //         }
-        // }
-        // stage('Terraform Plan'){
-        //          steps{
-        //             echo "************Terraform Plan*****************"
-        //                 sh 'terraform plan -var="name=params.EC2_NAME" InfraBuild/'
-        //             }
-        // }
+        stage('Terraform Init and Validate'){
+            steps{
+                echo "***************Terraform initialization*************"    
+                    sh 'terraform init InfraBuild/'
+                    sh 'terraform validate InfraBuild/'
+                }
+        }
+        stage('Terraform Plan'){
+                 steps{
+                    echo "************Terraform Plan*****************"
+                        sh 'terraform plan -var="name=params.EC2_NAME" InfraBuild/'
+                    }
+        }
         stage('Terraform Apply'){
             steps{
                 echo "***********Terraform Apply****************"
