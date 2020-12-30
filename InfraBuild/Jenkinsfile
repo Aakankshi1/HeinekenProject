@@ -25,7 +25,7 @@ pipeline {
         stage('Terraform Plan'){
                  steps{
                     echo "************Terraform Plan*****************"
-                        sh 'terraform plan InfraBuild/ --var=params.EC2_NAME'
+                        sh 'terraform plan InfraBuild/ -var=params.EC2_NAME'
                         sh 'terraform plan InfraBuild/ --var=params.EC2_NAME -out myplan'
                     }
         }
@@ -33,7 +33,7 @@ pipeline {
             steps{
                 echo "***********Terraform Apply****************"
                 input "Deploy Infra to AWS ?"
-                sh 'terraform apply InfraBuild/ --auto-approve --var=params.EC2_NAME'
+                sh 'terraform apply InfraBuild/ --auto-approve -var=params.EC2_NAME'
             }
         }
     }
