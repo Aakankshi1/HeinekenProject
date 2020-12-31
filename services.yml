@@ -16,6 +16,6 @@ spec:
       nodePort: 30301
       protocol: TCP
       name: https
-  type: LoadBalancer    
+  type: NodePort    
   selector:
     app: static-app
