@@ -7,6 +7,6 @@ metadata:
 spec:
   containers:
     - name: static-app
-      image: aakankshi/hnproject:v1
+      image: aakankshi/hnproject:{{GIT_COMMIT}}
       ports:
         - containerPort: 80

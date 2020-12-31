@@ -51,10 +51,10 @@ pipeline {
                     sh "scp -vvv -o StrictHostKeyChecking=no services.yml static-app-pod.yml ubuntu@18.217.248.102:/home/ubuntu/"
                     script{
                         try{
-                            sh "ssh ubuntu@18.217.248.102 kubectl apply -f ."
+                            sh "ssh ubuntu@18.217.248.102 cat static-app-pod.yml | sed 's/{{GIT_COMMIT}}/${DOCKER_TAG}/g' | kubectl apply -f ."
                         }
                         catch(error){
-                            sh "ssh ubuntu@18.217.248.102 kubectl create -f ."
+                            sh "ssh ubuntu@18.217.248.102 cat static-app-pod.yml | sed 's/{{GIT_COMMIT}}/${DOCKER_TAG}/g' | kubectl create -f ."
                         }
                     }
                 }
